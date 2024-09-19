@@ -3,9 +3,14 @@ import { fileURLToPath } from "url";
 import fs from "fs/promises";
 import { Document } from "langchain/document";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { FaissStore } from "@langchain/community/vectorstores/faiss";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+const OPENAI_API_KEY =
+  "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";
 
 type KnowledgeDocument = {
   type: "FAQ" | "transcript";
@@ -21,9 +26,7 @@ const loadKnowledgeBase = async (): Promise<Document[]> => {
       __dirname,
       "../knowledge/knowledge_base.json"
     );
-
     const rawData = await fs.readFile(filePath, "utf-8");
-
     const knowledgeBase = JSON.parse(rawData) as {
       documents: KnowledgeDocument[];
     };
@@ -97,19 +100,86 @@ const splitDocuments = async (documents: Document[]): Promise<Document[]> => {
   }
 };
 
-const main = async () => {
+const embedDocuments = async (documents: Document[]): Promise<number[][]> => {
+  try {
+    const embeddings = new OpenAIEmbeddings({
+      apiKey: OPENAI_API_KEY,
+      model: "text-embedding-3-large",
+      batchSize: 512,
+    });
+
+    const vectors = await embeddings.embedDocuments(
+      documents.map((doc) => doc.pageContent)
+    );
+
+    console.log("Osadzenia (Embeddings) Dokumentów:");
+    vectors.forEach((vector, index) => {
+      console.log(`Osadzenie Dokumentu ${index + 1}:`);
+      console.log(vector.slice(0, 100));
+      console.log("---------------------------");
+    });
+
+    return vectors;
+  } catch (error) {
+    console.error("Błąd podczas tworzenia osadzeń dokumentów:", error);
+    return [];
+  }
+};
+
+const knowledgeProcessor = async (): Promise<void> => {
   const docs = await loadKnowledgeBase();
 
   if (docs.length === 0) {
     console.error("Brak dokumentów do przetworzenia.");
     return;
   }
+
   const splitDocs = await splitDocuments(docs);
 
   if (splitDocs.length === 0) {
     console.error("Brak podzielonych dokumentów do dalszego przetwarzania.");
     return;
   }
+
+  const embeddings = await embedDocuments(splitDocs);
+
+  if (embeddings.length === 0) {
+    console.error("Błąd podczas tworzenia osadzeń dokumentów.");
+    return;
+  }
+
+  try {
+    const embeddingsInstance = new OpenAIEmbeddings({
+      apiKey: OPENAI_API_KEY,
+      model: "text-embedding-3-large",
+      batchSize: 512,
+    });
+
+    const faissIndexPath = path.resolve(__dirname, "../data/faiss_index.bin");
+
+    const dataDir = path.dirname(faissIndexPath);
+    try {
+      await fs.mkdir(dataDir, { recursive: true });
+    } catch (mkdirError) {
+      console.error(
+        "Błąd podczas tworzenia katalogu na Faiss index:",
+        mkdirError
+      );
+      return;
+    }
+
+    const vectorStore = await FaissStore.fromDocuments(
+      splitDocs,
+      embeddingsInstance
+    );
+    await vectorStore.save(faissIndexPath);
+
+    console.log(
+      `Dokumenty zostały zaindeksowane w Faiss i zapisane pod ścieżką: ${faissIndexPath}`
+    );
+  } catch (error) {
+    console.error("Błąd podczas indeksowania dokumentów w Faiss:", error);
+  }
 };
 
-main();
+export default knowledgeProcessor;
