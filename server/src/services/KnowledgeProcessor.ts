@@ -2,6 +2,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs/promises";
 import { Document } from "langchain/document";
+import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,13 +15,15 @@ type KnowledgeDocument = {
   content?: string[];
 };
 
-async function loadKnowledgeBase() {
+const loadKnowledgeBase = async (): Promise<Document[]> => {
   try {
     const filePath = path.resolve(
       __dirname,
       "../knowledge/knowledge_base.json"
     );
+
     const rawData = await fs.readFile(filePath, "utf-8");
+
     const knowledgeBase = JSON.parse(rawData) as {
       documents: KnowledgeDocument[];
     };
@@ -58,12 +61,55 @@ async function loadKnowledgeBase() {
       console.log(`Metadata: ${JSON.stringify(doc.metadata, null, 2)}`);
       console.log("---------------------------");
     });
+
+    return processedDocuments;
   } catch (error) {
     if (error instanceof SyntaxError) {
       console.error("Błąd parsowania JSON:", error.message);
     } else {
       console.error("Błąd podczas ładowania bazy wiedzy:", error);
     }
+    return [];
   }
-}
-loadKnowledgeBase();
+};
+
+const splitDocuments = async (documents: Document[]): Promise<Document[]> => {
+  try {
+    const splitter = new RecursiveCharacterTextSplitter({
+      chunkSize: 1000,
+      chunkOverlap: 200,
+    });
+
+    const splitDocs = await splitter.splitDocuments(documents);
+
+    console.log("Podzielone Dokumenty:");
+    splitDocs.forEach((doc, index) => {
+      console.log(`Podzielony Dokument ${index + 1}:`);
+      console.log(`Zawartość: ${doc.pageContent}`);
+      console.log(`Metadata: ${JSON.stringify(doc.metadata, null, 2)}`);
+      console.log("---------------------------");
+    });
+
+    return splitDocs;
+  } catch (error) {
+    console.error("Błąd podczas dzielenia dokumentów:", error);
+    return [];
+  }
+};
+
+const main = async () => {
+  const docs = await loadKnowledgeBase();
+
+  if (docs.length === 0) {
+    console.error("Brak dokumentów do przetworzenia.");
+    return;
+  }
+  const splitDocs = await splitDocuments(docs);
+
+  if (splitDocs.length === 0) {
+    console.error("Brak podzielonych dokumentów do dalszego przetwarzania.");
+    return;
+  }
+};
+
+main();
