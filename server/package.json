@@ -5,6 +5,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
+    "start:indextest": "tsx src/index.ts",
     "start:knowledge": "tsx src/services/knowledgeProcessor.ts",
     "build": "tsc",
     "start": "node dist/index.js",
