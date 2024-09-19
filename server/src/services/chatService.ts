@@ -1,87 +1,91 @@
-import { ChatOpenAI } from "@langchain/llms";
-import { OpenAIEmbeddings } from "@langchain/embeddings";
-import { HNSWLib } from "@langchain/vectorstores";
-import { Document } from "@langchain/core";
-import * as fs from "fs";
-import { join } from "path";
+import path from "path";
+import { fileURLToPath } from "url";
+import { ChatOpenAI } from "@langchain/openai";
+import { HNSWLib } from "@langchain/community/vectorstores/hnswlib";
+import { OpenAIEmbeddings } from "@langchain/openai";
+import {
+  RunnableSequence,
+  RunnablePassthrough,
+} from "@langchain/core/runnables";
+import { ChatPromptTemplate } from "@langchain/core/prompts";
+import { StringOutputParser } from "@langchain/core/output_parsers";
+import { formatDocumentsAsString } from "langchain/util/document";
 
-// Hardcoded API key
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const INDEX_PATH = path.resolve(__dirname, "../data/hnswlib_index");
+
 const OPENAI_API_KEY =
   "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";
 
-// Funkcja ładująca wektorową bazę danych
-async function loadVectorStore() {
-  const embeddings = new OpenAIEmbeddings({
-    openAIApiKey: OPENAI_API_KEY,
-  });
+const model = new ChatOpenAI({
+  model: "gpt-4o",
+  temperature: 0.7,
+  openAIApiKey: OPENAI_API_KEY,
+  maxTokens: 1050,
+});
 
-  // Wczytaj dokumenty z bazy wiedzy
-  const knowledgeBasePath = join(__dirname, "../knowledge/knowledge_base.json");
-  const knowledgeBaseContent = fs.readFileSync(knowledgeBasePath, "utf8");
-  const knowledgeBase = JSON.parse(knowledgeBaseContent);
+const loadVectorStore = async (): Promise<HNSWLib> => {
+  try {
+    const embeddings = new OpenAIEmbeddings({
+      openAIApiKey: OPENAI_API_KEY,
+      modelName: "text-embedding-3-large",
+    });
 
-  // Utwórz tablicę obiektów Document
-  const docs = knowledgeBase.map(
-    (item: any) =>
-      new Document({
-        pageContent: item.content,
-        metadata: item.metadata,
-      })
-  );
+    const vectorStore = await HNSWLib.load(INDEX_PATH, embeddings);
+    console.log("Wektorowa baza danych została pomyślnie załadowana.");
+    return vectorStore;
+  } catch (error) {
+    console.error("Błąd podczas ładowania wektorowej bazy danych:", error);
+    throw error;
+  }
+};
 
-  // Utwórz wektorowy magazyn danych
-  const vectorStore = await HNSWLib.fromDocuments(docs, embeddings);
+const qaSystemPrompt = `You are an assistant for question-answering tasks.
+Use the following pieces of retrieved context to answer the question.
+If you don't know the answer, just say that you don't know.
 
-  return vectorStore;
-}
+{context}`;
 
-// Funkcja ustawiająca model ChatOpenAI
-function getChatModel() {
-  const model = new ChatOpenAI({
-    openAIApiKey: OPENAI_API_KEY,
-    modelName: "gpt-4", // lub 'gpt-3.5-turbo' w zależności od dostępu
-    temperature: 0,
-  });
+const qaPrompt = ChatPromptTemplate.fromMessages([
+  ["system", qaSystemPrompt],
+  ["human", "{question}"],
+]);
 
-  return model;
-}
+const outputParser = new StringOutputParser();
 
-// Główna funkcja obsługująca zapytania użytkownika
-async function chatService() {
+const createRagChain = (retriever: any) => {
+  return RunnableSequence.from([
+    RunnablePassthrough.assign({
+      context: async (input: Record<string, any>) => {
+        const retrievedContext = await retriever.invoke(input.question);
+        return formatDocumentsAsString(retrievedContext);
+      },
+    }),
+    qaPrompt,
+    model,
+    outputParser,
+  ]);
+};
+
+const chatService = async (): Promise<void> => {
   try {
     const vectorStore = await loadVectorStore();
-    const model = getChatModel();
+    const retriever = vectorStore.asRetriever();
 
-    // Przykładowe zapytanie
-    const query = "Jak mogę zaprosić osobę do zespołu organizacji?";
+    const ragChain = createRagChain(retriever);
 
-    // Wyszukaj powiązane dokumenty
-    const relevantDocs = await vectorStore.similaritySearch(query, 3);
+    const question =
+      "Testuję aplikację i korzystam z dwóch urządzeń. Gdy zakupię aplikację co się stanie?";
 
-    // Przygotuj kontekst z pobranych dokumentów
-    const context = relevantDocs.map((doc) => doc.pageContent).join("\n");
+    const response = await ragChain.invoke({
+      question,
+    });
 
-    // Przygotuj wiadomości dla modelu
-    const messages = [
-      [
-        "system",
-        `Jesteś pomocnym asystentem. Użyj poniższego kontekstu, aby odpowiedzieć na pytanie użytkownika.
-
-Kontekst:
-${context}
-`,
-      ],
-      ["user", query],
-    ];
-
-    // Wywołaj model
-    const aiMsg = await model.invoke(messages);
-
-    console.log("Odpowiedź asystenta:");
-    console.log(aiMsg.content);
+    console.log("Asystent:", response);
   } catch (error) {
-    console.error("Błąd w chatService:", error);
+    console.error("Błąd podczas obsługi zapytania:", error);
   }
-}
+};
 
 export default chatService;

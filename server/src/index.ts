@@ -1,12 +1,12 @@
-import knowledgeProcessor from "./services/knowledgeProcessor";
+import chatService from "./services/chatService";
 
-const runKnowledgeProcessor = async () => {
+const runChatService = async () => {
   try {
-    await knowledgeProcessor();
-    console.log("Proces indeksowania zakończony.");
+    await chatService();
+    console.log("Proces czatu zakończony.");
   } catch (error) {
-    console.error("Błąd w procesie indeksowania:", error);
+    console.error("Błąd w procesie czatu:", error);
   }
 };
 
-runKnowledgeProcessor();
+runChatService();

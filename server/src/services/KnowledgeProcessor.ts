@@ -118,13 +118,12 @@ const knowledgeProcessor = async (): Promise<void> => {
   try {
     const embeddingsInstance = new OpenAIEmbeddings({
       openAIApiKey: OPENAI_API_KEY,
-      modelName: "text-embedding-ada-002",
+      modelName: "text-embedding-3-large",
       batchSize: 512,
     });
 
     const indexPath = path.resolve(__dirname, "../data/hnswlib_index");
 
-    // Utwórz katalog, jeśli nie istnieje
     const dataDir = indexPath;
     try {
       await fs.mkdir(dataDir, { recursive: true });
