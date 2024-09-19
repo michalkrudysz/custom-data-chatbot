@@ -25,6 +25,7 @@
     "@langchain/core": "^0.2.34",
     "@langchain/openai": "^0.3.0",
     "faiss-node": "^0.5.1",
+    "hnswlib-node": "^3.0.0",
     "langchain": "^0.3.2"
   }
 }

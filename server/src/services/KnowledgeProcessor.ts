@@ -4,7 +4,7 @@ import fs from "fs/promises";
 import { Document } from "langchain/document";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { OpenAIEmbeddings } from "@langchain/openai";
-import { FaissStore } from "@langchain/community/vectorstores/faiss";
+import { HNSWLib } from "@langchain/community/vectorstores/hnswlib";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -100,32 +100,6 @@ const splitDocuments = async (documents: Document[]): Promise<Document[]> => {
   }
 };
 
-const embedDocuments = async (documents: Document[]): Promise<number[][]> => {
-  try {
-    const embeddings = new OpenAIEmbeddings({
-      apiKey: OPENAI_API_KEY,
-      model: "text-embedding-3-large",
-      batchSize: 512,
-    });
-
-    const vectors = await embeddings.embedDocuments(
-      documents.map((doc) => doc.pageContent)
-    );
-
-    console.log("Osadzenia (Embeddings) Dokumentów:");
-    vectors.forEach((vector, index) => {
-      console.log(`Osadzenie Dokumentu ${index + 1}:`);
-      console.log(vector.slice(0, 100));
-      console.log("---------------------------");
-    });
-
-    return vectors;
-  } catch (error) {
-    console.error("Błąd podczas tworzenia osadzeń dokumentów:", error);
-    return [];
-  }
-};
-
 const knowledgeProcessor = async (): Promise<void> => {
   const docs = await loadKnowledgeBase();
 
@@ -141,44 +115,38 @@ const knowledgeProcessor = async (): Promise<void> => {
     return;
   }
 
-  const embeddings = await embedDocuments(splitDocs);
-
-  if (embeddings.length === 0) {
-    console.error("Błąd podczas tworzenia osadzeń dokumentów.");
-    return;
-  }
-
   try {
     const embeddingsInstance = new OpenAIEmbeddings({
-      apiKey: OPENAI_API_KEY,
-      model: "text-embedding-3-large",
+      openAIApiKey: OPENAI_API_KEY,
+      modelName: "text-embedding-ada-002",
       batchSize: 512,
     });
 
-    const faissIndexPath = path.resolve(__dirname, "../data/faiss_index.bin");
+    const indexPath = path.resolve(__dirname, "../data/hnswlib_index");
 
-    const dataDir = path.dirname(faissIndexPath);
+    // Utwórz katalog, jeśli nie istnieje
+    const dataDir = indexPath;
     try {
       await fs.mkdir(dataDir, { recursive: true });
     } catch (mkdirError) {
       console.error(
-        "Błąd podczas tworzenia katalogu na Faiss index:",
+        "Błąd podczas tworzenia katalogu na indeks HNSWLib:",
         mkdirError
       );
       return;
     }
 
-    const vectorStore = await FaissStore.fromDocuments(
+    const vectorStore = await HNSWLib.fromDocuments(
       splitDocs,
       embeddingsInstance
     );
-    await vectorStore.save(faissIndexPath);
+    await vectorStore.save(indexPath);
 
     console.log(
-      `Dokumenty zostały zaindeksowane w Faiss i zapisane pod ścieżką: ${faissIndexPath}`
+      `Dokumenty zostały zaindeksowane w HNSWLib i zapisane pod ścieżką: ${indexPath}`
     );
   } catch (error) {
-    console.error("Błąd podczas indeksowania dokumentów w Faiss:", error);
+    console.error("Błąd podczas indeksowania dokumentów w HNSWLib:", error);
   }
 };
 
