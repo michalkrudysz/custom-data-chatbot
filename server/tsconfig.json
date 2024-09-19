@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2016",
+    "target": "ES2020",
     "module": "ESNext",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -11,5 +11,8 @@
     "moduleResolution": "node"
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "exclude": ["node_modules", "**/*.spec.ts"],
+  "ts-node": {
+    "esm": true
+  }
 }
