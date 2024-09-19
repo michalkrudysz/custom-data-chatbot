@@ -1,0 +1,178 @@
+{
+  "documents": [
+    {
+      "type": "FAQ",
+      "question": "Czym jest Pocket Inspections?",
+      "answer": "Pocket Inspections to aplikacja mobilna do zarządzania zadaniami i usterkami na budowie przeznaczona głównie dla inżynierów, architektów i deweloperów."
+    },
+    {
+      "type": "FAQ",
+      "question": "Czy Pocket Inspections działa bez internetu?",
+      "answer": "Tak, aplikacja Pocket Inspections działa w trybie offline z zachowaniem wszystkich swoich kluczowych funkcji."
+    },
+    {
+      "type": "FAQ",
+      "question": "Ile osób może jednocześnie korzystać z aplikacji?",
+      "answer": "Z aplikacji można korzystać, pracując nawet w kilkudziesięcioosobowym zespole. Jeden pakiet to jedna licencja przeznaczona dla jednego użytkownika (jednego urządzenia)."
+    },
+    {
+      "type": "FAQ",
+      "question": "Czy w Pocket Inspections mogę pracować z podwykonawcami? Ile by mnie to kosztowało?",
+      "answer": "W Pocket Inspections możesz pracować na jednym projekcie z dowolną ilością podwykonawców, inżynierów lub inspektorów. Nie wiąże się to z dodatkowymi kosztami. Osoby zaproszone do projektu mogą w nim uczestniczyć korzystając z darmowej licencji, będą miały wtedy możliwość przeglądania oraz edytowania usterek oraz dodawania zdjęć. Jeżeli będą posiadali płatną licencję, będą mogli również zgłaszać usterki/zadania oraz generować raporty."
+    },
+    {
+      "type": "FAQ",
+      "question": "Czy aplikacja przeznaczona jest tylko dla branży budowlanej?",
+      "answer": "Nie. Nasza aplikacja będzie przydatna dla każdego, kto wykonuje dokumentację tekstową i fotograficzną podczas pracy w terenie. Może być wykorzystywana na przykład podczas inspekcji maszyn, urządzeń oraz przeglądów BHP."
+    },
+    {
+      "type": "FAQ",
+      "question": "Czy Pocket Inspections nadaje się do przeglądów okresowych budynków?",
+      "answer": "Tak, aplikacja skraca czas potrzebny na stworzenie przeglądu okresowego budynku poprzez wygenerowanie specjalnego protokołu w formacie Word który zawiera wszystkie zarejestrowane usterki i problemy."
+    },
+    {
+      "type": "FAQ",
+      "question": "Jakie ograniczenia ma aplikacja podczas okresu testowego?",
+      "answer": "W trakcie okresu testowego aplikacja posiada ograniczenie 25 zgłoszeń (usterek) w ramach projektu. Dodatkowo podczas okresu testowego nie ma limitu urządzeń, na których może zalogować się użytkownik – dzięki temu możesz sprawdzić samodzielnie czy wolisz pracować na smartfonie czy na tablecie."
+    },
+    {
+      "type": "FAQ",
+      "question": "Co się stanie po zakończeniu 14-dniowego okresu testowego?",
+      "answer": "Po zakończonym okresie testowym możesz wybrać jeden z pakietów dostępnych w zakładce Cennik lub pozostać przy koncie bezpłatnym pozwalającym na uczestniczenie w projekcie z ograniczonymi uprawnieniami. Będziesz mógł przeglądać i edytować zgłoszenia, ale nie będziesz mógł tworzyć nowych. Jeśli dołączyłeś do projektu zewnętrznego partnera lub posiadasz własne projekty, nie utracisz zapisanych na serwerze danych, lecz nie będziesz mógł zsynchronizować zmian w projektach jeśli dodałeś usterki/zgłoszenia."
+    },
+    {
+      "type": "FAQ",
+      "question": "Jak mogę zapłacić za korzystanie z aplikacji?",
+      "answer": "Zaloguj się na swoje konto do aplikacji www pod adresem: https://app.pocketinspections.com a następnie z bocznego menu wybierz Menu->Kup licencję. Jeśli chcesz zapłacić przelewem za subskrypcję roczną, skontaktuj się z nami pod adresem info@pocketinspections.com"
+    },
+    {
+      "type": "FAQ",
+      "question": "Czy mogę wykupić abonament na okres krótszy niż 3 miesiące?",
+      "answer": "Tak, istnieje taka możliwość. W takim wypadku należy skorzystać z cyklicznej miesięcznej płatności Stripe, a następnie po opłaceniu licencji można zakończyć subskrypcję w dowolnym momencie. Licencja pozostanie aktywna do zakończenia opłaconego okresu."
+    },
+    {
+      "type": "FAQ",
+      "question": "Czy mogę otrzymać fakturę proforma do opłacenia licencji?",
+      "answer": "Oczywiście. Możesz to zrobić osobiście z poziomu aplikacji webowej poprzez Menu -> Płatności -> Kup Licencję -> Płatność przelewem - faktura ProForma. Z faktury proforma możesz skorzystać przy zakupie licencji na 6 miesięcy lub na cały rok. Uwaga: licencja zostanie aktywowana dopiero po zaksięgowaniu wpłaty."
+    },
+    {
+      "type": "FAQ",
+      "question": "W okresie testowym korzystam z dwóch urządzeń, do którego urządzenia zostanie przypisana licencja po jej zakupieniu?",
+      "answer": "W związku z tym, że podczas okresu testowego nie ma limitu na logowanie aplikacji z różnych urządzeń po zakupie licencji należy dokonać decyzji z którego urządzenia będziemy na stałe korzystać z Pocket Inspections. Po zakupie licencji zostanie ona aktywowana na pierwszym urządzeniu na którym zostanie przeprowadzone logowanie lub synchronizacja."
+    },
+    {
+      "type": "FAQ",
+      "question": "Czy mogę przejść z planu Standard na Pro w trakcie jego trwania?",
+      "answer": "Tak, można dokonać zmiany z licencji STANDARD na PRO w trakcie jej trwania. Należy jedynie dokonać dopłatę, proporcjonalną do pozostałego czasu trwania licencji. Jeżeli dokonałeś płatności przez usługę Stripe, możesz zrobić to sam z poziomu aplikacji lub możesz się skontaktować z nami, a my poprowadzimy Cię przez resztę procesu."
+    },
+    {
+      "type": "FAQ",
+      "question": "Co się stanie gdy zmienię/zgubię urządzenie na którym korzystam z Pocket Inspections?",
+      "answer": "W przypadku zgubienia/zmiany urządzenia należy się z nami skontaktować, abyśmy mogli wyczyścić informację o urządzeniu przypisanym do Twojego konta. Następnie wystarczy zalogować się na nowym urządzeniu, które automatycznie zostanie przypisane do Twojego konta."
+    },
+    {
+      "type": "FAQ",
+      "question": "W jakich formatach mogę tworzyć raporty?",
+      "answer": "Możesz generować raporty w PDF, DOCX, XLSX. Ich dostępność zależy od wybranego planu subskrypcji. Szczegóły znajdziesz w zakładce Cennik"
+    },
+    {
+      "type": "FAQ",
+      "question": "Jak mogę dodać podwykonawców do projektu?",
+      "answer": "Przejdź do ustawień projektu aby dodać podwykonawców do projektu. Następnie kliknij Zespół → Dodaj osobę do projektu -> Zaproś użytkownika z zewnętrznej firmy."
+    },
+    {
+      "type": "transcript",
+      "title": "Lokalizacja GPS usterki w terenie",
+      "content": [
+        "00:00 Pocket Inspections. Włączenie usług lokalizacji GPS dla dowolnego istniejącego projektu.",
+        "00:04 Widzimy ekran startowy aplikacji Pocket Inspections. Jest tu tytuł projektu 'Demo Nawiasy' i przycisk do dodania projektu.",
+        "00:05 Otwieramy przykładowy projekt i przechodzimy do ustawień aplikacji.",
+        "00:07 Przechodzimy w dół ekranu, do sekcji 'Narzędzia'.",
+        "00:09 Następnie do 'Ustawienia' i wybieramy 'Ustawienia lokalizacji GPS'.",
+        "00:10 Otwiera się okno 'Ustawienia lokalizacji GPS' z komunikatem: 'Włącz / Wyłącz usługę lokalizacji GPS dla projektu' i przyciskiem 'Zapisz'.",
+        "00:11 Przesuwamy przełącznik, aby włączyć usługę lokalizacji GPS dla projektu.",
+        "00:12 Klikamy 'Zapisz', aby zapisać ustawienia.",
+        "00:13 Aplikacja zapisuje ustawienia.",
+        "00:14 Po zapisaniu ustawień wracamy do poprzedniego widoku.",
+        "00:16 Następnie wracamy do ekranu projektu.",
+        "00:17 Klikamy przycisk, aby dodać nową usterkę/zadanie.",
+        "00:18 Otwiera się ekran 'Dodaj nowy' z polami do wypełnienia. Jest tu pole 'Tytuł', 'Kategoria', 'Typ', 'Status', 'Dodatkowy opis', 'Grupa zadań', 'Lokalizacja', 'Lokalizacja GPS' i 'Przydzielono do'.",
+        "00:19 Wpisujemy w pole tytuł 'Pęknięta nawierzchnia drogi'.",
+        "00:27 Klikamy w ikonę z aparatem, aby dodać zdjęcie.",
+        "00:28 Otwiera się okno 'Zdjęcia' z listą folderów ze zdjęciami. Wybieramy 'Recents'.",
+        "00:29 Wybieramy jedno ze zdjęć i klikamy 'Done'.",
+        "00:31 Zdjęcie zostało dodane.",
+        "00:34 Klikamy w ikonę lokalizacji GPS.",
+        "00:35 Pojawiają się współrzędne GPS.",
+        "00:36 Klikamy w przycisk 'Zapisz' w prawym górnym rogu.",
+        "00:37 Na ekranie widzimy komunikat 'Element został zapisany'.",
+        "00:38 Wracamy do ekranu projektu, klikamy w dodany element i widzimy przypisaną lokalizację GPS.",
+        "00:39 Klikamy w ikonę lokalizacji GPS.",
+        "00:40 Aplikacja otwiera Google Maps z zaznaczonym punktem na mapie o przypisanych współrzędnych.",
+        "00:45 Wracamy do aplikacji.",
+        "00:46 Klikamy w przycisk 'Zapisz' w prawym górnym rogu.",
+        "00:47 Po zapisaniu zmian wracamy do ekranu projektu.",
+        "00:52 Pocket Inspections. Włącznie usług lokalizacji GPS dla nowego projektu.",
+        "00:54 Widzimy ekran startowy aplikacji Pocket Inspections i klikamy w przycisk 'Dodaj projekt'.",
+        "00:55 Otwiera się ekran 'Wybierz rodzaj projektu'.",
+        "00:57 Wybieramy dowolny z rodzajów projektów i klikamy 'Dalej'.",
+        "00:58 Otwiera się okno 'Nowy projekt' z polami do wypełnienia. Jest tu pole 'Nazwa projektu', 'Adres', 'Lokalizacja GPS', 'Numer referencyjny', 'Inwestor', 'Generalny wykonawca', 'Data rozpoczęcia', 'Data zakończenia' i przełącznik 'Włącz lokalizacje GPS dla tego projektu'.",
+        "01:00 Wpisujemy nazwę projektu 'Autostrada A4'.",
+        "01:07 Przesuwamy przełącznik, aby włączyć usługę lokalizacji GPS dla projektu.",
+        "01:09 Klikamy w przycisk 'Zapisz' w prawym górnym rogu.",
+        "01:10 Aplikacja zapisuje nowy projekt.",
+        "01:11 Po zapisaniu projektu wyświetla się komunikat 'Twój projekt został utworzony'.",
+        "01:12 Aplikacja otwiera nowy projekt.",
+        "01:14 Klikamy przycisk, aby dodać nową usterkę/zadanie.",
+        "01:15 Otwiera się ekran 'Dodaj nowy' z polami do wypełnienia. Jest tu pole 'Lokalizacja GPS (start)' i 'Lokalizacja GPS (koniec)'.",
+        "01:18 Klikamy w ikonę lokalizacji GPS (start).",
+        "01:19 Pojawiają się współrzędne GPS (start).",
+        "01:20 Klikamy w ikonę lokalizacji GPS (koniec).",
+        "01:21 Pojawiają się współrzędne GPS (koniec).",
+        "01:22 Aplikacja otwiera Google Maps z zaznaczonym punktem na mapie o przypisanych współrzędnych GPS (start).",
+        "01:24 Przechodzimy na Google Maps do zaznaczonego punktu o przypisanych współrzędnych GPS (koniec).",
+        "01:26 Pocket Inspections. Generowanie raportu z lokalizacjami GPS.",
+        "01:29 Przechodzimy do widoku projektu na komputerze.",
+        "01:30 Klikamy w projekt 'Autostrada A4'.",
+        "01:34 Klikamy w zakładkę 'Raporty'.",
+        "01:37 Klikamy 'Nowy raport'.",
+        "01:40 Klikamy w 'PDF'.",
+        "01:43 Wybieramy 'Raport techniczny (strona A4 pionowa)'.",
+        "01:47 W polu 'Szczegóły elementów' wybieramy z listy 'Pokaż lokalizacje GPS (start)'.",
+        "01:50 Wybieramy format i klikamy 'Generuj raport'.",
+        "01:51 Raport zostaje wygenerowany i zapisany na dysku komputera.",
+        "01:54 Przechodzimy do pobranego raportu.",
+        "02:00 Otwieramy wygenerowany raport techniczny. Widzimy w nim lokalizację GPS (start).",
+        "02:12 Kopiujemy współrzędne GPS (start) z raportu i wklejamy do Google Maps.",
+        "02:17 Google Maps wyświetla zaznaczony punkt na mapie o przypisanych współrzędnych."
+      ]
+    },
+    {
+      "type": "transcript",
+      "title": "Zaproszenie osoby do organizacji - zespołu",
+      "content": [
+        "0:00 Cześć. W tym krótkim filmie chciałbym pokazać ci, jak dodać nowe osoby do zespołu, tak, aby w przyszłości łatwiej było pracować w zespole nad projektami.",
+        "0:10 Klikamy 'Menu'.",
+        "0:13 'Zespół'.",
+        "0:14 Klikamy przycisk 'Zapros'.",
+        "0:18 Tutaj uzupełniamy adres e-mail osoby, którą chcemy zaprosić.",
+        "0:26 Kolejną rzeczą, jaką musimy zrobić, jest nadanie tej osobie roli.",
+        "0:31 Mamy do wyboru 'Member' albo 'Admin'.",
+        "0:34 'Member' jest taką domyślną rolą, 'Admin' natomiast ma możliwość zarządzania zespołem oraz przydzielaniem licencji, a także zmianą licenzji między użytkownikami.",
+        "0:50 Po przydzieleniu roli możemy przypisać również licencję, jeżeli takową posiadamy.",
+        "0:56 I wysyłamy zaproszenie.",
+        "0:58 Po wysłaniu zaproszenia dostaniesz tak wyglądającego maila z informacją, że ktoś zaprasza cię do współpracy w ramach Pocket Inspections. Ważnym jest, abyś to właśnie poprzez ten przycisk tutaj zaakceptował to zaproszenie.",
+        "1:13 Wtedy zostaniesz przeniesiony na ekran zakładania konta.",
+        "1:17 Uzupełniamy pola i akceptujemy zaproszenie.",
+        "1:26 Po zaakceptowaniu zaproszenia, nie zapomnij zsynchronizować aplikacji i w menu 'Zespół' powinna pojawić się nasza nowa osoba. W tym przypadku jest to pan Kowalski Jan.",
+        "1:43 Jedna ważna rzecz na sam koniec, na którą chciałbym zwrócić twoją uwagę, to to, że dodając nowego użytkownika, nową osobę do twojego zespołu, nie zostanie ona automatycznie dodana do twoich projektów. Musisz zrobić to samodzielnie.",
+        "1:59 Kliknij na 'Projekt', wybierz ikonkę 'Zębatki', menu 'Zespół', tutaj 'Dodaj osobę do projektu' z twojej organizacji.",
+        "2:13 Wybieramy osobę z listy i przydzielamy jej rolę.",
+        "2:19 Pamiętaj jednak, że rola w organizacji to nie to samo, co rola w projekcie.",
+        "2:25 To czym są role, omówiliśmy w naszym filmiku na YouTube. Informacje odnośnie ról możesz znaleźć również na naszej stronie internetowej pocketinspections.com.",
+        "2:41 Po zapisaniu roli, pan Jan Kowalski, gdy tylko zsynchronizuje swoją aplikację, będzie miał dostęp do przydzielonego projektu.",
+        "2:52 Dziękuję za uwagę."
+      ]
+    }
+  ]
+}
