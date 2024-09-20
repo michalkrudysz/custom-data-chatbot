@@ -21,7 +21,7 @@ const INDEX_PATH = path.resolve(__dirname, "../data/hnswlib_index");
 const OPENAI_API_KEY =
   "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";
 
-const model = new ChatOpenAI({
+const chatModel = new ChatOpenAI({
   model: "gpt-4o",
   temperature: 0.7,
   openAIApiKey: OPENAI_API_KEY,
@@ -58,7 +58,7 @@ const qaPrompt = ChatPromptTemplate.fromMessages([
 
 const outputParser = new StringOutputParser();
 
-const createRagChain = (retriever: any) => {
+const createQAChain = (retriever: any) => {
   return RunnableSequence.from([
     RunnablePassthrough.assign({
       context: async (input: Record<string, any>) => {
@@ -67,46 +67,34 @@ const createRagChain = (retriever: any) => {
       },
     }),
     qaPrompt,
-    model,
+    chatModel,
     outputParser,
   ]);
 };
 
-const chatService = async (): Promise<void> => {
+const vectorStorePromise = loadVectorStore();
+
+type ChatServiceInput = {
+  question: string;
+  chat_history: Array<HumanMessage | AIMessage>;
+};
+
+const chatService = async ({
+  question,
+  chat_history,
+}: ChatServiceInput): Promise<string> => {
   try {
-    const vectorStore = await loadVectorStore();
+    const vectorStore = await vectorStorePromise;
     const retriever = vectorStore.asRetriever();
-
-    const ragChain = createRagChain(retriever);
-
-    let chat_history: Array<HumanMessage | AIMessage> = [];
-
-    const question1 =
-      "Testuję aplikację i korzystam z dwóch urządzeń. Gdy zakupię aplikację co się stanie?";
-
-    const response1 = await ragChain.invoke({
-      question: question1,
-      chat_history: chat_history,
+    const qaChain = createQAChain(retriever);
+    const response = await qaChain.invoke({
+      question,
+      chat_history,
     });
-
-    console.log("Asystent:", response1);
-
-    chat_history.push(new HumanMessage(question1));
-    chat_history.push(new AIMessage(response1));
-
-    const question2 = "Co z moimi danymi?";
-
-    const response2 = await ragChain.invoke({
-      question: question2,
-      chat_history: chat_history,
-    });
-
-    console.log("Asystent:", response2);
-
-    chat_history.push(new HumanMessage(question2));
-    chat_history.push(new AIMessage(response2));
+    return response;
   } catch (error) {
     console.error("Błąd podczas obsługi zapytania:", error);
+    throw error;
   }
 };
 
