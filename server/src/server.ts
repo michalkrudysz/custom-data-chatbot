@@ -2,7 +2,9 @@ import express from "express";
 import http from "http";
 import initializeChatNamespace from "./routes/chat";
 import authorizationRoutes from "./routes/authorization";
+import dashboardRoutes from "./routes/dashboard";
 import dotenv from "dotenv";
+import { authMiddleware } from "./middleware/authMiddleware";
 
 dotenv.config();
 
@@ -11,7 +13,7 @@ const server = http.createServer(app);
 
 app.use(express.json());
 app.use("/auth", authorizationRoutes);
-
+app.use("/dashboard", authMiddleware, dashboardRoutes);
 initializeChatNamespace(server);
 
 const PORT = process.env.PORT || 3000;
