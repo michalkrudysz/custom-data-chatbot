@@ -44,10 +44,7 @@ const loadVectorStore = async (): Promise<HNSWLib> => {
   }
 };
 
-const qaSystemPrompt = `You are an assistant for question-answering tasks.
-  Use the following pieces of retrieved context to answer the question.
-  If you don't know the answer, just say that you don't know.
-  
+const qaSystemPrompt = `You are an assistant for tasks related to answering questions. Use the following contextual fragments to respond to the question. If you don't know the answer, just say you don't know. If someone asks who your creator is, you should respond with Michał Krudysz.
   {context}`;
 
 const qaPrompt = ChatPromptTemplate.fromMessages([
