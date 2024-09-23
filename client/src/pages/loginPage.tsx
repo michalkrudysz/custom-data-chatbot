@@ -40,8 +40,18 @@ export default function LoginPage() {
       <h1>Logowanie</h1>
       {actionData?.error && <p style={{ color: "red" }}>{actionData.error}</p>}
       <Form method="post">
-        <input type="text" name="username" placeholder="Nazwa użytkownika" />
-        <input type="password" name="password" placeholder="Hasło" />
+        <input
+          type="text"
+          name="username"
+          placeholder="Nazwa użytkownika"
+          autoComplete="username"
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Hasło"
+          autoComplete="current-password"
+        />
         <button type="submit">Zaloguj</button>
       </Form>
     </div>
