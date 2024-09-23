@@ -5,6 +5,7 @@ import authorizationRoutes from "./routes/authorization";
 import dashboardRoutes from "./routes/dashboard";
 import dotenv from "dotenv";
 import { authMiddleware } from "./middleware/authMiddleware";
+import { corsMiddleware } from "./middleware/corsMiddleware";
 
 dotenv.config();
 
@@ -12,6 +13,8 @@ const app = express();
 const server = http.createServer(app);
 
 app.use(express.json());
+app.use(corsMiddleware);
+
 app.use("/auth", authorizationRoutes);
 app.use("/dashboard", authMiddleware, dashboardRoutes);
 initializeChatNamespace(server);
