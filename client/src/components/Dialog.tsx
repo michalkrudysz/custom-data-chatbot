@@ -1,4 +1,4 @@
-// Dialog.tsx
+import { CSSProperties } from "react";
 
 type DialogProps = {
   imageSrc: string;
@@ -15,7 +15,7 @@ const getDialogStyles = (
   borderRadius: string = "2rem",
   color: string = "#121113",
   width: string = "20rem"
-) => ({
+): CSSProperties => ({
   position: "absolute" as const,
   backgroundColor,
   borderRadius,
@@ -30,20 +30,20 @@ const getDialogStyles = (
   paddingLeft: "1.1rem",
 });
 
-const containerStyles = (top: string, left: string) => ({
-  position: "absolute",
+const containerStyles = (top: string, left: string): CSSProperties => ({
+  position: "absolute" as const,
   top,
   left,
-  display: "flex",
-  alignItems: "center",
+  display: "flex" as const,
+  alignItems: "center" as const,
   padding: "20px",
 });
 
-const avatarStyles = {
+const avatarStyles: CSSProperties = {
   width: "4.2rem",
   height: "4.2rem",
   borderRadius: "50%",
-  objectFit: "cover",
+  objectFit: "cover" as const,
 };
 
 const Dialog = ({
