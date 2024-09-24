@@ -1,10 +1,12 @@
+// LoginPage.tsx
+
 import classes from "./LoginPage.module.scss";
 import { Form, useActionData, redirect, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import apiClient from "../api/client";
 import logo from "../../public/logo_vector.svg";
 import Footer from "../components/Footer";
-import Dialog from "../components/Dialog";
+import Dialog, { DialogProps } from "../components/Dialog"; // Import typu DialogProps
 
 import avatarOne from "../assets/avatar_1.webp";
 import avatarTwo from "../assets/avatar_2.webp";
@@ -14,16 +16,6 @@ import avatarFive from "../assets/avatar_5.webp";
 
 type ActionData = {
   error?: string;
-};
-
-type DialogProps = {
-  imageSrc: string;
-  containerTop: string;
-  containerLeft: string;
-  backgroundColor?: string;
-  color?: string;
-  width?: string;
-  content: string;
 };
 
 export const action = async ({ request }: { request: Request }) => {

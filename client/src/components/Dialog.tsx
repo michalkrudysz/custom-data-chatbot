@@ -1,6 +1,6 @@
 import { CSSProperties } from "react";
 
-type DialogProps = {
+export type DialogProps = {
   imageSrc: string;
   containerTop: string;
   containerLeft: string;
