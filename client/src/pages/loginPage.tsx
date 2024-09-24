@@ -4,9 +4,26 @@ import { useEffect } from "react";
 import apiClient from "../api/client";
 import logo from "../../public/logo_vector.svg";
 import Footer from "../components/Footer";
+import Dialog from "../components/Dialog";
+
+import avatarOne from "../assets/avatar_1.webp";
+import avatarTwo from "../assets/avatar_2.webp";
+import avatarThree from "../assets/avatar_3.webp";
+import avatarFour from "../assets/avatar_4.webp";
+import avatarFive from "../assets/avatar_5.webp";
 
 type ActionData = {
   error?: string;
+};
+
+type DialogProps = {
+  imageSrc: string;
+  containerTop: string;
+  containerLeft: string;
+  backgroundColor?: string;
+  color?: string;
+  width?: string;
+  content: string;
 };
 
 export const action = async ({ request }: { request: Request }) => {
@@ -37,6 +54,56 @@ export default function LoginPage() {
       navigate("/");
     }
   }, [navigate]);
+
+  const dialogOne: DialogProps = {
+    imageSrc: avatarOne,
+    containerTop: "7rem",
+    containerLeft: "9rem",
+    backgroundColor: "#b2b3ff",
+    color: "#121113",
+    width: "15rem",
+    content: "Jakie funkcje oferuje ta aplikacja?",
+  };
+
+  const dialogTwo: DialogProps = {
+    imageSrc: avatarTwo,
+    containerTop: "36rem",
+    containerLeft: "86rem",
+    backgroundColor: "#ffffff",
+    color: "#181818",
+    width: "18rem",
+    content: "Czy mogę korzystać z aplikacji bez dostępu do internetu?",
+  };
+
+  const dialogThree: DialogProps = {
+    imageSrc: avatarThree,
+    containerTop: "49rem",
+    containerLeft: "26rem",
+    backgroundColor: "#2d4cfa",
+    color: "#f8f6f9",
+    width: "19rem",
+    content: "Jak zaprosić członków zespołu do projektu?",
+  };
+
+  const dialogFour: DialogProps = {
+    imageSrc: avatarFour,
+    containerTop: "9rem",
+    containerLeft: "84rem",
+    backgroundColor: "#6e40ff",
+    color: "#f8f6f9",
+    width: "18rem",
+    content: "Czy dostępna jest wersja próbna aplikacji?",
+  };
+
+  const dialogFive: DialogProps = {
+    imageSrc: avatarFive,
+    containerTop: "30rem",
+    containerLeft: "2rem",
+    backgroundColor: "#d87edb",
+    color: "#f8f6f9",
+    width: "20rem",
+    content: "W jakich formatach mogę generować raporty?",
+  };
 
   return (
     <div className={classes["login-page"]}>
@@ -75,6 +142,11 @@ export default function LoginPage() {
           </Form>
         </div>
       </div>
+      <Dialog {...dialogOne} />
+      <Dialog {...dialogTwo} />
+      <Dialog {...dialogThree} />
+      <Dialog {...dialogFour} />
+      <Dialog {...dialogFive} />
       <Footer />
     </div>
   );
