@@ -1,6 +1,8 @@
+import classes from "./LoginPage.module.scss";
 import { Form, useActionData, redirect, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import apiClient from "../api/client";
+import logo from "../../public/logo_vector.svg";
 
 type ActionData = {
   error?: string;
@@ -36,8 +38,16 @@ export default function LoginPage() {
   }, [navigate]);
 
   return (
-    <div className="login-page">
-      <h1>Logowanie</h1>
+    <div className={classes["login-page"]}>
+      <div className={classes.header}>
+        <div className={classes.logo}>
+          <img src={logo} alt="Logo" />
+        </div>
+        <h1>
+          Wykorzystaj potencjał swoich danych dzięki spersonalizowanym chatom na
+          wyciągnięcie ręki
+        </h1>
+      </div>
       {actionData?.error && <p style={{ color: "red" }}>{actionData.error}</p>}
       <Form method="post">
         <input

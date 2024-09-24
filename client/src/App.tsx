@@ -8,7 +8,6 @@ import LoginPage, { action as loginAction } from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./pages/ProtectedRoute";
 
-// Główny router aplikacji
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
