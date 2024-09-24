@@ -3,6 +3,7 @@ import { Form, useActionData, redirect, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import apiClient from "../api/client";
 import logo from "../../public/logo_vector.svg";
+import Footer from "../components/Footer";
 
 type ActionData = {
   error?: string;
@@ -74,6 +75,7 @@ export default function LoginPage() {
           </Form>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

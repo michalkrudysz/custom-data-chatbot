@@ -1,0 +1,14 @@
+.footer {
+  position: fixed;
+  bottom: 0.8rem;
+  .footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    a {
+      text-decoration: none;
+      color: white;
+    }
+  }
+}
