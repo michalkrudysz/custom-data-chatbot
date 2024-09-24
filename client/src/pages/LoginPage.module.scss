@@ -6,21 +6,119 @@
   overflow: hidden;
   height: 100vh;
   width: 100vw;
+
   .header {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     .logo {
       img {
         width: 100px;
         height: 100px;
       }
     }
+
     h1 {
       text-align: center;
-      font-size: 2rem;
+      font-size: 3.2rem;
+      line-height: 3.4rem;
+      width: 60%;
+    }
+
+    h2 {
+      margin-top: 0.5rem;
+      font-size: 1.6rem;
+      font-weight: 300;
       width: 80%;
+      text-align: center;
+    }
+  }
+
+  .login-section {
+    margin-top: 2rem;
+    background-color: #9294ff;
+    box-shadow: -2px -1px 30px -15px rgba(104, 65, 242, 1);
+    border-radius: 10px;
+    width: 35vw;
+    height: 38vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .form-container {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+
+      h2 {
+        color: #472da6;
+        font-size: 2.3rem;
+        text-align: center;
+        font-weight: 700;
+        margin-top: 1.85rem;
+      }
+
+      .form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        input {
+          all: unset;
+          background-color: #181818;
+          margin-top: 0.3rem;
+          width: 18rem;
+          height: 3.3rem;
+          border-radius: 5px;
+          padding-left: 1.1rem;
+        }
+
+        button {
+          all: unset;
+          background: linear-gradient(135deg, #6841f2, #5a3bdb, #4c34c4);
+          margin-top: 0.5rem;
+          align-self: flex-end;
+          color: white;
+          width: 10rem;
+          text-align: center;
+          font-weight: 600;
+          height: 3rem;
+          border-radius: 5px;
+          cursor: pointer;
+          position: relative;
+          overflow: hidden;
+          z-index: 1;
+
+          &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #7a52ff, #6841f2, #5a3bdb);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+          }
+
+          &:hover::before {
+            opacity: 1;
+            animation: gradientTransition 0.5s ease forwards;
+          }
+        }
+
+        @keyframes gradientTransition {
+          0% {
+            background-position: 0% 50%;
+          }
+          100% {
+            background-position: 100% 50%;
+          }
+        }
+      }
     }
   }
 }

@@ -43,27 +43,37 @@ export default function LoginPage() {
         <div className={classes.logo}>
           <img src={logo} alt="Logo" />
         </div>
-        <h1>
-          Wykorzystaj potencjał swoich danych dzięki spersonalizowanym chatom na
-          wyciągnięcie ręki
-        </h1>
+        <h1>Twórz spersonalizowane chaty w oparciu o swoje dane</h1>
+        <h2>
+          Nasza aplikacja automatycznie przekształca Twoje dane w chaty
+          dopasowane do Twoich potrzeb
+        </h2>
       </div>
-      {actionData?.error && <p style={{ color: "red" }}>{actionData.error}</p>}
-      <Form method="post">
-        <input
-          type="text"
-          name="username"
-          placeholder="Nazwa użytkownika"
-          autoComplete="username"
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Hasło"
-          autoComplete="current-password"
-        />
-        <button type="submit">Zaloguj</button>
-      </Form>
+      <div className={classes["login-section"]}>
+        {actionData?.error && (
+          <p style={{ color: "red" }}>{actionData.error}</p>
+        )}
+        <div className={classes["form-container"]}>
+          <h2>Zaloguj się</h2>
+          <Form method="post" className={classes.form}>
+            <input
+              type="text"
+              name="username"
+              placeholder="Nazwa użytkownika"
+              autoComplete="username"
+              required
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Hasło"
+              autoComplete="current-password"
+              required
+            />
+            <button type="submit">Zaloguj</button>
+          </Form>
+        </div>
+      </div>
     </div>
   );
 }
