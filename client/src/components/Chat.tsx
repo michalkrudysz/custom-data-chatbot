@@ -1,45 +1,32 @@
 import { useState, useEffect } from "react";
-import { io, Socket } from "socket.io-client";
-
-type ChatMessage = {
-  sender: string;
-  message: string;
-};
+import { chatService, ChatMessage } from "../api/client";
 
 const Chat: React.FC = () => {
-  const [socket, setSocket] = useState<Socket | null>(null);
   const [message, setMessage] = useState<string>("");
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
   useEffect(() => {
-    const newSocket: Socket = io("ws://localhost:3000/chat", {
-      transports: ["websocket"],
-      auth: {
-        token: localStorage.getItem("token"),
-      },
-    });
-
-    setSocket(newSocket);
-
-    newSocket.on("response", (data: string) => {
+    const handleResponse = (data: string) => {
       setChatMessages((prevMessages) => [
         ...prevMessages,
         { sender: "server", message: data },
       ]);
-    });
+    };
 
-    newSocket.on("connect_error", (error: Error) => {
+    const handleConnectError = (error: Error) => {
       console.error("Błąd połączenia:", error);
-    });
+    };
+
+    chatService.connect(handleResponse, handleConnectError);
 
     return () => {
-      newSocket.close();
+      chatService.disconnect();
     };
   }, []);
 
   const handleSendMessage = () => {
-    if (socket && message.trim() !== "") {
-      socket.emit("message", message);
+    if (message.trim() !== "") {
+      chatService.sendMessage(message);
       setChatMessages((prevMessages) => [
         ...prevMessages,
         { sender: "user", message },

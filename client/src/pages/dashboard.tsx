@@ -1,6 +1,7 @@
 import classes from "./Dashboard.module.scss";
 import { useNavigate } from "react-router-dom";
 import Chat from "../components/Chat";
+import Footer from "../components/Footer";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export default function Dashboard() {
       <div className={classes["test-chat"]}>
         <Chat />
       </div>
+      <Footer />
     </div>
   );
 }
