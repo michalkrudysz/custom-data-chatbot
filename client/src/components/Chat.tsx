@@ -20,13 +20,11 @@ const Chat: React.FC = () => {
         );
 
         if (typingMessageIndex !== -1) {
-          // Zastępujemy wiadomość "typing" otrzymaną odpowiedzią
           updatedMessages[typingMessageIndex] = {
             sender: "server",
             message: data,
           };
         } else {
-          // Jeśli z jakiegoś powodu nie znaleziono wiadomości "typing", dodajemy nową
           updatedMessages.push({ sender: "server", message: data });
         }
 
@@ -51,7 +49,7 @@ const Chat: React.FC = () => {
       setChatMessages((prevMessages) => [
         ...prevMessages,
         { sender: "user", message },
-        { sender: "server", message: "", isTyping: true }, // Dodajemy wskaźnik "typing"
+        { sender: "server", message: "", isTyping: true },
       ]);
       setMessage("");
     }
