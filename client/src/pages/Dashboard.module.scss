@@ -1,0 +1,18 @@
+.dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  .logout {
+    position: absolute;
+    top: 1rem;
+    right: 10rem;
+  }
+  .settings-container {
+  }
+  .test-chat {
+  }
+}
