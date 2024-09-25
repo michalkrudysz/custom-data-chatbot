@@ -24,11 +24,11 @@ export const login = async (req: Request, res: Response) => {
   }
 
   if (username !== adminUsername) {
-    return res.status(401).json({ message: "Nieprawidłowe dane logowania." });
+    return res.status(401).json({ message: "Nieprawidłowe dane logowania" });
   }
 
   if (password !== adminPassword) {
-    return res.status(401).json({ message: "Nieprawidłowe dane logowania." });
+    return res.status(401).json({ message: "Nieprawidłowe dane logowania" });
   }
 
   const token = jwt.sign({ username }, JWT_SECRET, {

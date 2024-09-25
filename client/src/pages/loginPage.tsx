@@ -1,12 +1,10 @@
-// LoginPage.tsx
-
 import classes from "./LoginPage.module.scss";
 import { Form, useActionData, redirect, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import apiClient from "../api/client";
 import logo from "../../public/logo_vector.svg";
 import Footer from "../components/Footer";
-import Dialog, { DialogProps } from "../components/Dialog"; // Import typu DialogProps
+import Dialog, { DialogProps } from "../components/Dialog";
 
 import avatarOne from "../assets/avatar_1.webp";
 import avatarTwo from "../assets/avatar_2.webp";
@@ -32,7 +30,7 @@ export const action = async ({ request }: { request: Request }) => {
     localStorage.setItem("token", data.token);
     return redirect("/");
   } catch (error: any) {
-    return { error: "Nieprawidłowe dane logowania." };
+    return { error: "Nieprawidłowe dane logowania" };
   }
 };
 
@@ -63,7 +61,7 @@ export default function LoginPage() {
     containerLeft: "86rem",
     backgroundColor: "#ffffff",
     color: "#181818",
-    width: "18rem",
+    width: "16rem",
     content: "Czy mogę korzystać z aplikacji bez dostępu do internetu?",
   };
 
@@ -99,6 +97,7 @@ export default function LoginPage() {
 
   return (
     <div className={classes["login-page"]}>
+      <div className={classes.shadow}></div>
       <div className={classes.header}>
         <div className={classes.logo}>
           <img src={logo} alt="Logo" />
@@ -110,9 +109,6 @@ export default function LoginPage() {
         </h2>
       </div>
       <div className={classes["login-section"]}>
-        {actionData?.error && (
-          <p style={{ color: "red" }}>{actionData.error}</p>
-        )}
         <div className={classes["form-container"]}>
           <h2>Zaloguj się</h2>
           <Form method="post" className={classes.form}>
@@ -131,6 +127,9 @@ export default function LoginPage() {
               required
             />
             <button type="submit">Zaloguj</button>
+            {actionData?.error && (
+              <p className={classes.error}>{actionData.error}</p>
+            )}
           </Form>
         </div>
       </div>
