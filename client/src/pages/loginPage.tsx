@@ -1,6 +1,6 @@
 import classes from "./LoginPage.module.scss";
 import { Form, useActionData, redirect, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import apiClient from "../api/client";
 import logo from "../../public/logo_vector.svg";
 import Footer from "../components/Footer";
@@ -37,6 +37,7 @@ export const action = async ({ request }: { request: Request }) => {
 export default function LoginPage() {
   const actionData = useActionData() as ActionData;
   const navigate = useNavigate();
+  const [error, setError] = useState<string | undefined>(actionData?.error);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -44,6 +45,18 @@ export default function LoginPage() {
       navigate("/");
     }
   }, [navigate]);
+
+  useEffect(() => {
+    if (actionData?.error) {
+      setError(actionData.error);
+    }
+  }, [actionData]);
+
+  const handleInputFocus = () => {
+    if (error) {
+      setError(undefined);
+    }
+  };
 
   const dialogOne: DialogProps = {
     imageSrc: avatarOne,
@@ -118,6 +131,7 @@ export default function LoginPage() {
               placeholder="Nazwa użytkownika"
               autoComplete="username"
               required
+              onFocus={handleInputFocus}
             />
             <input
               type="password"
@@ -125,11 +139,10 @@ export default function LoginPage() {
               placeholder="Hasło"
               autoComplete="current-password"
               required
+              onFocus={handleInputFocus}
             />
             <button type="submit">Zaloguj</button>
-            {actionData?.error && (
-              <p className={classes.error}>{actionData.error}</p>
-            )}
+            {error && <p className={classes.error}>{error}</p>}
           </Form>
         </div>
       </div>
