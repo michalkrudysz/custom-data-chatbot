@@ -18,6 +18,7 @@ type KnowledgeDocument = {
   answer?: string;
   title?: string;
   content?: string[];
+  video_link?: string;
 };
 
 const loadKnowledgeBase = async (): Promise<Document[]> => {
@@ -42,18 +43,30 @@ const loadKnowledgeBase = async (): Promise<Document[]> => {
           index,
         };
         processedDocuments.push(new Document({ pageContent, metadata }));
-      } else if (doc.type === "transcript" && doc.title && doc.content) {
-        const cleanedContent = doc.content
-          .map((line) => line.replace(/^\d+:\d+\s*/, ""))
-          .join("\n");
-        const pageContent = `Title: ${doc.title}\nContent:\n${cleanedContent}`;
-        const metadata = {
-          type: doc.type,
-          title: doc.title,
-          source: "knowledge_base.json",
-          index,
-        };
-        processedDocuments.push(new Document({ pageContent, metadata }));
+      } else if (
+        doc.type === "transcript" &&
+        doc.title &&
+        doc.content &&
+        doc.video_link
+      ) {
+        doc.content.forEach((line, lineIndex) => {
+          const match = line.match(/^(\d+:\d+)\s*(.*)/);
+          if (match) {
+            const timestamp = match[1];
+            const text = match[2];
+            const pageContent = `Title: ${doc.title}\nTimestamp: ${timestamp}\nContent:\n${text}`;
+            const metadata = {
+              type: doc.type,
+              title: doc.title,
+              video_link: doc.video_link,
+              timestamp: timestamp,
+              source: "knowledge_base.json",
+              index,
+              line: lineIndex,
+            };
+            processedDocuments.push(new Document({ pageContent, metadata }));
+          }
+        });
       }
     });
 
@@ -83,7 +96,16 @@ const splitDocuments = async (documents: Document[]): Promise<Document[]> => {
       chunkOverlap: 200,
     });
 
-    const splitDocs = await splitter.splitDocuments(documents);
+    const splitDocs: Document[] = [];
+
+    for (const doc of documents) {
+      if (doc.metadata.type === "transcript") {
+        splitDocs.push(doc);
+      } else {
+        const chunks = await splitter.splitDocuments([doc]);
+        splitDocs.push(...chunks);
+      }
+    }
 
     console.log("Podzielone Dokumenty:");
     splitDocs.forEach((doc, index) => {
