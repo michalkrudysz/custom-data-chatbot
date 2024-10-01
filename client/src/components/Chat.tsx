@@ -3,9 +3,9 @@ import { chatService, ChatMessage } from "../api/client";
 import classes from "./Chat.module.scss";
 import sendIcon from "../assets/send_icon.svg";
 
-interface ExtendedChatMessage extends ChatMessage {
+type ExtendedChatMessage = ChatMessage & {
   isTyping?: boolean;
-}
+};
 
 const Chat: React.FC = () => {
   const [message, setMessage] = useState<string>("");
