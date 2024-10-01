@@ -11,8 +11,8 @@ import {
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
-import { formatDocumentsAsString } from "langchain/util/document";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
+import { Document } from "langchain/document";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -44,8 +44,14 @@ const loadVectorStore = async (): Promise<HNSWLib> => {
   }
 };
 
-const qaSystemPrompt = `You are an assistant for answering questions. Use the contextual fragments below to respond to questions. If you don't know the answer, simply say that you don't know. If they ask which company you work for, say it's Pocketinspections, and that you answer questions related to the company's activities and provide support for its app.
-  {context}`;
+function formatVideoLink(video_link: string, timestamp: string): string {
+  const [minutes, seconds] = timestamp.split(":").map(Number);
+  const totalSeconds = minutes * 60 + seconds;
+  return `${video_link}&t=${totalSeconds}s`;
+}
+
+const qaSystemPrompt = `You are an assistant tasked with answering questions. Use the provided context fragments to respond to queries. If the answer comes from a video transcript, include a link to the video with the relevant timestamp in your response. If you don’t know the answer, simply say you don’t know. If asked which company you work for, say it’s Pocket Inspections, and that you provide answers related to the company’s operations and support for its app.
+{context}`;
 
 const qaPrompt = ChatPromptTemplate.fromMessages([
   ["system", qaSystemPrompt],
@@ -59,8 +65,26 @@ const createQAChain = (retriever: any) => {
   return RunnableSequence.from([
     RunnablePassthrough.assign({
       context: async (input: Record<string, any>) => {
-        const retrievedContext = await retriever.invoke(input.question);
-        return formatDocumentsAsString(retrievedContext);
+        const retrievedDocs: Document[] = await retriever.invoke(
+          input.question
+        );
+        const formattedContext = retrievedDocs
+          .map((doc: Document) => {
+            if (
+              doc.metadata.type === "transcript" &&
+              doc.metadata.timestamp &&
+              doc.metadata.video_link
+            ) {
+              const timestamp = doc.metadata.timestamp;
+              const videoLink = doc.metadata.video_link;
+              const formattedVideoLink = formatVideoLink(videoLink, timestamp);
+              return `W wideo "${doc.metadata.title}" o czasie ${timestamp} jest powiedziane: "${doc.pageContent}"\nObejrzyj tutaj: ${formattedVideoLink}`;
+            } else {
+              return doc.pageContent;
+            }
+          })
+          .join("\n");
+        return formattedContext;
       },
     }),
     qaPrompt,
