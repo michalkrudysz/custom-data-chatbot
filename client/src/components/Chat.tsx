@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { chatService, ChatMessage } from "../api/client";
 import classes from "./Chat.module.scss";
 import sendIcon from "../assets/send_icon.svg";
@@ -10,6 +10,8 @@ interface ExtendedChatMessage extends ChatMessage {
 const Chat: React.FC = () => {
   const [message, setMessage] = useState<string>("");
   const [chatMessages, setChatMessages] = useState<ExtendedChatMessage[]>([]);
+
+  const chatHistoryRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleResponse = (data: string) => {
@@ -43,6 +45,12 @@ const Chat: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (chatHistoryRef.current) {
+      chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
+    }
+  }, [chatMessages]);
+
   const handleSendMessage = () => {
     if (message.trim() !== "") {
       chatService.sendMessage(message);
@@ -58,7 +66,7 @@ const Chat: React.FC = () => {
   return (
     <div className={classes.chat}>
       <div className={classes["chat-header"]}>Przetestuj działanie chatu</div>
-      <div className={classes["chat-history"]}>
+      <div className={classes["chat-history"]} ref={chatHistoryRef}>
         {chatMessages.map((chatMessage, index) => (
           <div
             key={index}
