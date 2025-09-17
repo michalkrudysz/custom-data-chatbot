@@ -1,5 +1,6 @@
 import path from "path";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
 import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
 import { HNSWLib } from "@langchain/community/vectorstores/hnswlib";
 import {
@@ -14,12 +15,18 @@ import { StringOutputParser } from "@langchain/core/output_parsers";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
 import { Document } from "langchain/document";
 
+dotenv.config();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const INDEX_PATH = path.resolve(__dirname, "../data/hnswlib_index");
 
-const OPENAI_API_KEY =
-  "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";
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+if (!OPENAI_API_KEY) {
+  throw new Error(
+    "Brak zmiennej środowiskowej OPENAI_API_KEY. Dodaj ją do server/.env."
+  );
+}
 
 const chatModel = new ChatOpenAI({
   model: "gpt-4o",

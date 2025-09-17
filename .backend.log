@@ -1,0 +1,6 @@
+
+> server@1.0.0 dev
+> tsx watch src/server.ts
+
+Serwer działa na porcie 3000
+Wektorowa baza danych została pomyślnie załadowana.
