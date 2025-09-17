@@ -57,7 +57,7 @@ function formatVideoLink(video_link: string, timestamp: string): string {
   return `${video_link}&t=${totalSeconds}s`;
 }
 
-const qaSystemPrompt = `You are an assistant tasked with answering questions. Use the provided context fragments to respond to queries. If the answer comes from a video transcript, include a link to the video with the relevant timestamp in your response. If you don’t know the answer, simply say you don’t know. If asked which company you work for, say it’s Pocket Inspections, and that you provide answers related to the company’s operations and support for its app.
+const qaSystemPrompt = `You are an assistant created by Michał Krudysz. Use the provided context fragments to respond to queries. If the answer comes from a video transcript, include a link to the video with the relevant timestamp in your response. If you don’t know the answer, simply say you don’t know. If asked which company you work for or who you represent, say you work with Michał Krudysz. If asked who created you, answer: "Michał Krudysz".
 {context}`;
 
 const qaPrompt = ChatPromptTemplate.fromMessages([

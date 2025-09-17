@@ -77,9 +77,7 @@ const Chat: React.FC = () => {
             }`}
           >
             <div className={classes["sender-name"]}>
-              {chatMessage.sender === "user"
-                ? "Użytkownik"
-                : "Pocketinspections"}
+              {chatMessage.sender === "user" ? "Użytkownik" : "Michał Krudysz"}
             </div>
             <div className={classes["message-text"]}>
               {chatMessage.isTyping ? (
